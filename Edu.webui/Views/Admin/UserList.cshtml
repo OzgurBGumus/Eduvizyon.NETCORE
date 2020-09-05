@@ -1,0 +1,61 @@
+@model IEnumerable<User>
+@section Style{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css">
+}
+@section Script{
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#UserTable').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="h3" style="display: inline; margin-right:15px;">User List</h1>
+        <a href="/Admin/UserRegister"class="btn btn-primary btn-sm">Create User</a>
+        <hr>
+        <div class="mt-4">
+            <table id="UserTable" class="table table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>Username</td>
+                        <td>First Name</td>
+                        <td>Surname</td>
+                        <td>Email</td>
+                        <td>Phone</td>
+                        <td style="width:260px;"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in @Model)
+                    {
+                        <tr class="@(user.EmailConfirmed?"":"bg-warning")">
+                            <td></td>
+                            <td>@user.UserName</td>
+                            <td>@user.FirstName</td>
+                            <td>@user.LastName</td>
+                            <td>@user.Email</td>
+                            <td>@user.PhoneNumber</td>
+                            <td>
+                                <form asp-controller="Admin" asp-action="UserDelete" method="POST" style="display: inline;">
+                                                <input type="hidden" name="userId", value="@user.Id">
+                                                <button class="btn btn-xs btn-danger">Delete</button>
+                                            </form>
+                                <a href="/admin/UserEdit/@user.Id" class="btn btn-xs btn-primary">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

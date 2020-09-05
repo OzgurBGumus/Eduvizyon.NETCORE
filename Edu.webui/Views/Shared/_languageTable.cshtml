@@ -1,0 +1,29 @@
+@model List<Language>
+<table id="LanguageTable" class="table table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <td style="width:60px;">Id</td>
+            <td>Name</td>
+            <td style="width:260px;"></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var language in @Model)
+        {
+            <tr>
+                <td>@language.LanguageId</td>
+                <td>@language.Name</td>
+                <td>
+                    @if(User.IsInRole("Owner"))
+                    {
+                        <form asp-controller="Admin" asp-action="LanguageDelete" method="POST" style="display: inline;">
+                            <input type="hidden" name="languageId", value="@language.LanguageId">
+                            <button class="btn btn-xs btn-danger">Delete</button>
+                        </form>
+                    }
+                    <a href="/admin/LanguageEdit/@language.LanguageId" class="btn btn-xs btn-primary">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

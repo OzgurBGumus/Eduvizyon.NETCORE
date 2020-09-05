@@ -1,0 +1,87 @@
+@model RoleDetailModel
+@section Style{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css">
+}
+@section Script{
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#addUserTable').DataTable({
+                responsive: true
+            });
+            $('#DeleteUserTable').DataTable({
+                responsive: true
+            }); 
+        });
+    </script>
+}
+<form asp-controller="Admin" asp-action="RoleEdit" method="POST">
+    <input type="hidden" name="RoleId" value="@Model.Role.Id">
+    <input type="hidden" name="RoleName" value = "@Model.Role.Name">
+    <div class="row">
+        <div class="col-md-6">
+            <h1 class="h3" style="display: inline; margin-right:15px;">Add Users to @Model.Role.Name</h1>
+            <hr>
+            <div class="mt-4">
+                <table id="addUserTable" class="table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <td>Username</td>
+                            <td style="width:50px;"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(@Model.NonMembers.Count() != 0)
+                            {
+                                @foreach (var user in @Model.NonMembers)
+                                {
+                                    <tr>
+                                        <td>@user.UserName</td>
+                                        <td>
+                                            <input type="checkbox" class="form-check-input" name="IdsToAdd" value="@user.Id">
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h1 class="h3" style="display: inline; margin-right:15px;">Remove Users From @Model.Role.Name</h1>
+            <hr>
+            <div class="mt-4">
+                <table id="DeleteUserTable" class="table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <td>Username</td>
+                            <td style="width:50px;"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(@Model.Members.Count() !=0)
+                            {
+                                @foreach (var user in @Model.Members)
+                                {
+                                    <tr>
+                                        <td>@user.UserName</td>
+                                        <td>
+                                            <input type="checkbox" class="form-check-input" name="IdsToDelete" value="@user.Id">
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Save Role</button>
+</form>

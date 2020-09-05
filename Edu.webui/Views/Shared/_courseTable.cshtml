@@ -1,0 +1,39 @@
+@model List<Course>
+<table id="CourseTable" class="table table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <td style="width:30px;">Id</td>
+            <td>Name</td>
+            <td style="width:80px;">Start Date</td>
+            <td style="width:80px;">End Date</td>
+            <td style="width:100px;">Level</td>
+            <td style="width:50px;">Price</td>
+            <td style="width:50px;">Discount</td>
+            <td style="width:125px;"></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in @Model)
+        {
+            <tr class="@(course.Active?"":"bg-danger")">
+                <td>@course.CourseId</td>
+                <td>@course.Name</td>
+                <td>@course.StartDate</td>
+                <td>@course.EndDate</td>
+                <td>@course.Level</td>
+                <td>@course.PriceCourse</td>
+                <td>@course.Discount</td>
+                <td>
+                    @if(User.IsInRole("Owner") || User.IsInRole("Manager"))
+                    {
+                        <form asp-controller="Admin" asp-action="CourseDelete" method="POST" style="display: inline;">
+                            <input type="hidden" name="courseId", value="@course.CourseId">
+                            <button class="btn btn-xs btn-danger">Delete</button>
+                        </form>
+                    }
+                    <a href="/admin/CourseEdit/@course.CourseId" class="btn btn-xs btn-primary">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

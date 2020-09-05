@@ -1,0 +1,41 @@
+@model List<Accommodation>
+<table id="AccommodationTable" class="table table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <td style="width:60px;">Id</td>
+            <td>RoomType</td>
+            <td>Meal</td>
+            <td>Facility</td>
+            <td>Min. Booking</td>
+            <td>Price/Week</td>
+            <td>Distance</td>
+            <td>Active</td>
+            <td style="width:260px;"></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var accommodation in @Model)
+        {
+            <tr>
+                <td>@accommodation.AccommodationId</td>
+                <td>@accommodation.RoomType</td>
+                <td>@accommodation.MealType</td>
+                <td>@accommodation.FacilityType</td>
+                <td>@accommodation.MinimumBooking</td>
+                <td>@accommodation.PricePerWeek</td>
+                <td>@accommodation.DistanceFromSchool</td>
+                <td>@accommodation.Active</td>
+                <td>
+                    @if(User.IsInRole("Owner") || User.IsInRole("Manager"))
+                    {
+                        <form asp-controller="Admin" asp-action="AccommodationDelete" method="POST" style="display: inline;">
+                            <input type="hidden" name="AccommodationId", value="@accommodation.AccommodationId">
+                            <button class="btn btn-xs btn-danger">Delete</button>
+                        </form>
+                    }
+                    <a href="/admin/AccommodationEdit/@accommodation.AccommodationId" class="btn btn-xs btn-primary">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

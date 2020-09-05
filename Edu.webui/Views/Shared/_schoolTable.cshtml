@@ -1,0 +1,29 @@
+@model List<School>
+<table id="SchoolTable" class="table table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <td style="width:60">Id</td>
+            <td>Name</td>
+            <td style="width:260px;"></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var school in @Model)
+        {
+            <tr class="@(@school.active?"":"bg-danger")">
+                <td>@school.SchoolId</td>
+                <td>@school.Name</td>
+                <td>
+                    @if(User.IsInRole("Owner") || User.IsInRole("Manager"))
+                    {
+                        <form asp-controller="Admin" asp-action="SchoolDelete" method="POST" style="display: inline;">
+                            <input type="hidden" name="SchoolId" value="@school.SchoolId">
+                            <button type="submit" class="btn btn-xs btn-danger">Delete</button>
+                        </form>
+                    }
+                    <a href="/admin/SchoolEdit/@school.SchoolId" class="btn btn-xs btn-primary">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,41 @@
+@model List<Branch>
+<form action=""></form>
+<table id="BranchTable" class="table table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <td style="width:60">Id</td>
+            <td style="width:110px;">Email</td>
+            <td style="width:110px;">Country</td>
+            <td style="width:130px;">Airport Pickup</td>
+            <td>Health Insurance</td>
+            <td>Visa Price</td>
+            <td>Discount</td>
+            <td style="width:260px;"></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var branch in @Model)
+        {
+            <tr class="@(@branch.Active?"":"bg-danger")">
+                <td>@branch.BranchId</td>
+                <td>@branch.Email</td>
+                <td>@branch.BranchCountry.Select(i=>i.Country.Name).FirstOrDefault()</td>
+                <td>@branch.PriceAirportPickup</td>
+                <td>@branch.PriceHealthInsurance</td>
+                <td>@branch.PriceVisa</td>
+                <td>@branch.Discount</td>
+                <td>
+                    @if(User.IsInRole("Owner") || User.IsInRole("Manager"))
+                    {
+                        <form asp-controller="Admin" asp-action="BranchDelete" method="POST" style="display: inline;">
+                            <input type="hidden" name="branchId", value="@branch.BranchId">
+                            <button class="btn btn-xs btn-danger">Delete</button>
+                        </form>
+                    }
+                    <a href="/admin/BranchEdit/@branch.BranchId" class="btn btn-xs btn-primary">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

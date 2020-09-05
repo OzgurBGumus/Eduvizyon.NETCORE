@@ -1,0 +1,35 @@
+@model RoleModel
+
+@section Script{
+    @* //ServerSide Validation *@
+    <script src="/modules/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+}
+<div class="row ml-4">
+    <form asp-controller="Admin" asp-action="RoleCreate" method="POST">
+        <div class="col-sm-6">
+            <h1 class="h3">Role Create</h1> <hr>
+            <div class="row">
+                <div class="row">
+                    <div class="form-group col-sm-7">
+                        <label asp-for="Name"></label>
+                        <div class="">
+                            <input class="form-control" asp-for="Name">
+                            <span class="text-danger" asp-validation-for="Name"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 text-right">
+                        <button type="submit" class="btn btn-primary col-md-3">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="text-danger" asp-validation-summary="All"></div>
+        </div>
+    </form>
+</div>
+
+

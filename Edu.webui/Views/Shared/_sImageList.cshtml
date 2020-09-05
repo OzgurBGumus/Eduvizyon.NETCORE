@@ -1,0 +1,18 @@
+@model List<SImage>
+<div class="">
+        @foreach (SImage sImage in @Model)
+        {
+            <div class="col-md-3 text-center">
+                <img src="~/images/SImages/@sImage.Url" class="img-thumbnail">
+                @if(User.IsInRole("Owner") || User.IsInRole("Manager"))
+                {
+                    <form asp-controller="Admin" asp-action="SImageDelete" method="POST">
+                        <input type="hidden" value="@sImage.SImageId" name="SImageId">
+                        <button class="btn btn-xs btn-danger">Delete</button>
+                    </form>
+                }
+                
+            </div>
+            
+        }
+</div>

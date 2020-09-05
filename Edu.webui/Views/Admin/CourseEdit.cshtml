@@ -1,0 +1,159 @@
+@model CourseModel
+@section Style{
+    @* //Live Search *@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    @* //DateTime Picker *@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+}
+@section Script{
+
+    @* //Live Search *@
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+    @* //DateTime Picker *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    @* //ServerSide Validation *@
+    <script src="/modules/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+
+    <script>
+        $('.dateTime').datepicker();
+    </script>
+}
+<div class="row ml-4">
+    <form asp-controller="Admin" asp-action="CourseEdit" method="POST">
+        <input type="hidden" name="BranchId" value="@ViewBag.Branch.BranchId">
+        <input type="hidden" asp-for="CourseId">
+        <div class="col-sm-6">
+            <h1 class="h3">Course Edit</h1> 
+            <small><b>@ViewBag.Branch.Email</b></small> <br>
+            <small><b>@ViewBag.Branch.Adress</b></small><hr>
+            <div class="text-danger" asp-validation-summary="All"></div>
+            <div class="row">
+                <div class="row">
+                    <div class="form-group col-sm-7">
+                        <label asp-for="Name"></label>
+                        <div class="">
+                            <input class="form-control" asp-for="Name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-5">
+                        <label asp-for="Url"></label>
+                        <div class="">
+                            <input class="form-control" asp-for="Url">
+                            <span class="text-danger" asp-validation-for="Url"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <input class="form-check-input" type="checkbox" asp-for="Active">
+                        <label for="Active" class="form-check-label">Active</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label asp-for="LessonWeek"></label>
+                        <div class="">
+                            <input class="form-control" asp-for="LessonWeek">
+                            <span asp-validation-for="LessonWeek" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label asp-for="HourWeek"></label>
+                        <div class="">
+                            <input class="form-control" asp-for="HourWeek">
+                            <span asp-validation-for="HourWeek" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label asp-for="minAge"></label>
+                        <div class="">
+                            <input class="form-control" asp-for="minAge">
+                            <span class="text-danger" asp-validation-for="minAge"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MaxStudent"></label>
+                    <div class="">
+                        <input class="form-control" asp-for="MaxStudent">
+                        <span asp-validation-for="MaxStudent" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label>Start Date</label>
+                        <div class="">
+                            <input class="form-control dateTime" asp-for="StartDate" readonly>
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>End Date</label>
+                        <div class="">
+                            <input class="form-control dateTime" asp-for="EndDate" readonly>
+                            <span asp-validation-for="EndDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <textarea class="form-control" rows="5" asp-for="Description"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label>Language</label>
+                        <div class="">
+                            <select class="selectpicker" data-live-search="true" data-size=5 asp-for="LanguageId" asp-items="@ViewBag.AllLanguages"></select>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label>Time</label>
+                        <div class="">
+                            <select class="selectpicker" data-live-search="true" data-size=5 asp-for="TimeId" asp-items="@ViewBag.AllTimes"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label>Level</label>
+                        <div class="">
+                            <input class="form-control" asp-for="Level">
+                            <span asp-validation-for="Level" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label>Price</label>
+                        <div class="">
+                            <input class="form-control" asp-for="PriceCourse">
+                            <span asp-validation-for="PriceCourse" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label>Discount</label>
+                        <div class="">
+                            <input class="form-control" asp-for="Discount">
+                            <span asp-validation-for="Discount" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                @if(User.IsInRole("Owner") || User.IsInRole("Manager"))
+                {
+                    <div class="row">
+                        <div class="col-sm-12 text-right">
+                            <button type="submit" class="btn btn-primary col-md-3">Save</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-sm-6">
+            
+        </div>
+    </form>
+</div>
+
+

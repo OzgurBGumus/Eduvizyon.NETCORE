@@ -1,0 +1,38 @@
+@{
+    List<Time> times = ViewBag.Times;
+}
+@section Style{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css">
+}
+@section Script{
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#TimeTable').DataTable({
+                rowReorder: {
+                    selector: 'td:nth-child(2)'
+                },
+                responsive: true
+            });
+        });
+    </script>
+}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="h3" style="display: inline; margin-right:15px;">Time List</h1>
+        @if(User.IsInRole("Owner"))
+        {
+            <a href="/Admin/TimeCreate"class="btn btn-primary btn-sm">Create Time</a>
+        }
+        
+        <hr>
+        <div class="mt-4">
+            @await Html.PartialAsync("_timeTable", @times)
+        </div>
+    </div>
+</div>

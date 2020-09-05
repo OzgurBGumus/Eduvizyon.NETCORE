@@ -1,0 +1,56 @@
+@model IEnumerable<IdentityRole>
+@section Style{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css">
+}
+@section Script{
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#RoleTable').DataTable({
+                rowReorder: {
+                    selector: 'td:nth-child(2)'
+                },
+                responsive: true
+            });
+        });
+    </script>
+}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="h3" style="display: inline; margin-right:15px;">Role List</h1>
+        <a href="/Admin/RoleCreate"class="btn btn-primary btn-sm">Create Role</a>
+        <hr>
+        <div class="mt-4">
+            <table id="RoleTable" class="table table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <td style="width:60px;">Id</td>
+                        <td>Name</td>
+                        <td style="width:260px;"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var role in @Model)
+                    {
+                        <tr>
+                            <td>@role.Id</td>
+                            <td>@role.Name</td>
+                            <td>
+                                <form asp-controller="Admin" asp-action="RoleDelete" method="POST" style="display: inline;">
+                                                <input type="hidden" name="roleId", value="@role.Id">
+                                                <button class="btn btn-xs btn-danger">Delete</button>
+                                            </form>
+                                <a href="/admin/RoleEdit/@role.Id" class="btn btn-xs btn-primary">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

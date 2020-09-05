@@ -1,0 +1,19 @@
+{
+  "name": "Edu.webui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "blueimp-file-upload": "^10.31.0",
+    "bootstrap": "^4.5.2",
+    "jquery-validation": "^1.19.2",
+    "jquery-validation-unobtrusive": "^3.2.11"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

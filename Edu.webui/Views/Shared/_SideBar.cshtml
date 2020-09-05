@@ -1,0 +1,93 @@
+<ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+    <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+    <li class="sidebar-toggler-wrapper hide">
+        <div class="sidebar-toggler">
+            <span></span>
+        </div>
+    </li>
+    <!-- END SIDEBAR TOGGLER BUTTON -->
+    <li class="heading">
+        <h3 class="uppercase">Features</h3>
+    </li>
+    <li class="nav-item">
+        <a href="javascript:;" class="nav-link nav-toggle">
+            <i class="icon-settings"></i> Schools
+            <span class="arrow"></span>
+        </a>
+        <ul class="sub-menu" style="display: none;">
+            <li class="nav-item">
+                <a href="/admin/SchoolList" class="nav-link">
+                    <i class="icon-camera"></i> School List</a>
+            </li>
+            <li class="nav-item">
+                <a href="/admin/BranchList" class="nav-link">
+                    <i class="icon-link"></i> Branch List</a>
+            </li>
+            <li class="nav-item">
+                <a href="/admin/CourseList" class="nav-link">
+                    <i class="icon-pointer"></i> Course List</a>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item">
+        <a href="javascript:;" class="nav-link nav-toggle">
+            <i class="icon-settings"></i> Places
+            <span class="arrow"></span>
+        </a>
+        <ul class="sub-menu" style="display: none;">
+            <li class="nav-item">
+                <a href="/admin/CountryList" class="nav-link">
+                    <i class="icon-camera"></i> Country List</a>
+            </li>
+            <li class="nav-item">
+                <a href="/admin/StateList" class="nav-link">
+                    <i class="icon-link"></i> State List</a>
+            </li>
+            <li class="nav-item">
+                <a href="/admin/CityList" class="nav-link">
+                    <i class="icon-pointer"></i> City List</a>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item">
+        <a href="javascript:;" class="nav-link nav-toggle">
+            <i class="icon-settings"></i> Extras
+            <span class="arrow"></span>
+        </a>
+        <ul class="sub-menu" style="display: none;">
+            <li class="nav-item">
+                <a href="/admin/TimeList" class="nav-link">
+                    <i class="icon-camera"></i> Time List</a>
+            </li>
+            <li class="nav-item">
+                <a href="/admin/LanguageList" class="nav-link">
+                    <i class="icon-link"></i> Language List</a>
+            </li>
+        </ul>
+    </li>
+    @if(User.IsInRole("Owner"))
+    {
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-settings"></i> User Settings
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu" style="display: none;">
+                <li class="nav-item">
+                    <a href="/admin/UserRegister" class="nav-link">
+                        <i class="icon-camera"></i> User Register</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/RoleList" class="nav-link">
+                        <i class="icon-link"></i> Role List</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/UserList" class="nav-link">
+                        <i class="icon-pointer"></i> User List</a>
+                </li>
+            </ul>
+        </li>
+    }
+    
+</ul>

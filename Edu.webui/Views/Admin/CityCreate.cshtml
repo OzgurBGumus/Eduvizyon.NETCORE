@@ -1,0 +1,80 @@
+@model CityModel
+@{
+    List<Country> countries = ViewBag.Countries;
+    List<State> states = ViewBag.States;
+}
+@section Style{
+    @* //Live Search *@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+}
+@section Script{
+
+    @* //Live Search *@
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+    @* //ServerSide Validation *@
+    <script src="/modules/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+}
+<div class="row ml-4">
+    <form asp-controller="Admin" asp-action="CityCreate" method="POST">
+        <div class="col-sm-6">
+            <h1 class="h3">City Create</h1> <hr>
+            <div class="row">
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label asp-for="Name"></label>
+                        <div class="">
+                            <input class="form-control" asp-for="Name">
+                            <span class="text-danger" asp-validation-for="Name"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label>Country</label>
+                        <div class="">
+                            <select class="selectpicker" data-live-search="true" data-size=5 asp-for="CountryId">
+                                <option value="0"> Empty</option>
+                                @foreach (var country in @ViewBag.Countries)
+                                {
+                                    <option value="@country.CountryId">@country.Name</option>
+                                }
+                            </select>
+                            <span class="text-danger" asp-validation-for="CountryId"></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label>State</label>
+                        <div class="">
+                            <select class="selectpicker" data-live-search="true" data-size=5 asp-for="StateId">
+                                <option value="0"> Empty</option>
+                                @foreach (var state in @ViewBag.States)
+                                {
+                                    <option value="@state.StateId">@state.Name</option>
+                                }
+                            </select>
+                            <span class="text-danger" asp-validation-for="CountryId"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <input class="form-check-input" type="checkbox" asp-for="Active">
+                        <label for="Active" class="form-check-label">Active</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 text-right">
+                        <button type="submit" class="btn btn-primary col-md-3">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="text-danger" asp-validation-summary="All"></div>
+        </div>
+    </form>
+</div>
+
+

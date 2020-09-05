@@ -1,0 +1,73 @@
+@model CountryModel
+@{
+    List<Branch> branches = new List<Branch>();
+    branches = @ViewBag.Branches;
+}
+@section Style{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css">
+}
+@section Script{
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+    @* //ServerSide Validation *@
+    <script src="/modules/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#BranchTable').DataTable({
+                rowReorder: {
+                    selector: 'td:nth-child(4)'
+                },
+                "autoWidth": true,
+                "scrollX": true,
+                responsive: true
+            });
+        });
+    </script>
+}
+<div class="row justify-content-center">
+    <form asp-controller="Admin" asp-action="CountryEdit" method="POST">
+        <input type="hidden" asp-for="CountryId">
+        <div class="col-md-12">
+            <div class="col-sm-5">
+                <h1 class="h3">Country Edit</h1> <hr>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="row">
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label asp-for="Name"></label>
+                            <div class="">
+                                <input class="form-control" asp-for="Name">
+                                <span class="text-danger" asp-validation-for="Name"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <input class="form-check-input" type="checkbox" asp-for="Active">
+                            <label for="Active" class="form-check-label">Active</label>
+                        </div>
+                    </div>
+                    @if(User.IsInRole("Owner") || User.IsInRole("Manager"))
+                    {
+                        <div class="row">
+                            <div class="col-sm-12 text-right">
+                                
+                                <button type="submit" class="btn btn-primary col-md-3">Save</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <h1 class="h3">Country's Branches</h1> <hr> <hr>
+                @await Html.PartialAsync("_branchtable", branches) 
+            </div>
+        </div>
+        
+    </form>
+</div>

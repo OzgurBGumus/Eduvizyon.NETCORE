@@ -1,0 +1,224 @@
+@model BranchModel
+@{
+    List<Accommodation> Accommodations = ViewBag.SelectedAccommodations;
+    List<BImage> BImages =ViewBag.SelectedBImages;
+    List<Course> courses =ViewBag.SelectedCourses;
+}
+@section Style{
+    @* //DataTable *@
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css">
+    @* //Live Search *@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    @* //DateTime Picker *@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+}
+@section Script{
+    @* //DataTable *@
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+    @* //Live Search *@
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+    @* //DateTime Picker *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    @* //ServerSide Validation *@
+    <script src="/modules/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+
+    <script>
+        $(document).ready( function () {
+            $('.dateTime').datepicker();
+            $('#CourseTable').DataTable({
+                rowReorder: {
+                    selector: 'td:nth-child(4)'
+                },
+                "autoWidth": true,
+                "scrollX": true,
+                responsive: true
+            });
+            $('#AccommodationTable').DataTable({
+                rowReorder: {
+                    selector: 'td:nth-child(4)'
+                },
+                responsive: true
+            });
+        });
+    </script>
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="col-sm-5">
+            <form asp-controller="Admin" asp-action="BranchEdit" method="POST" enctype="multipart/form-data">
+                <input type="hidden" asp-for="BranchId">
+                <h1 class="h3">Branch Edit</h1>
+                <small><b>School: @ViewBag.School.Name</b></small> <hr>
+                <div class="text-danger" asp-validation-summary="All"></div>
+                <div class="row">
+                    <div class="row">
+                        <div class="form-group col-sm-8">
+                            <label asp-for="Iban"></label>
+                            <div class="">
+                                <input class="form-control" asp-for="Iban">
+                                <span class="text-danger" asp-validation-for="Iban"></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label asp-for="Discount"></label>
+                            <div class="">
+                                <input class="form-control" asp-for="Discount">
+                                <span class="text-danger" asp-validation-for="Discount"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <input class="form-check-input" type="checkbox" asp-for="Active">
+                            <label for="active" class="form-check-label">Active</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label asp-for="Email"></label>
+                            <div class="">
+                                <input class="form-control" asp-for="Email">
+                                <span class="text-danger" asp-validation-for="Email"></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label asp-for="Phone"></label>
+                            <div class="">
+                                <input class="form-control" asp-for="Phone">
+                                <span class="text-danger" asp-validation-for="Phone"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <label asp-for="CountryId"></label>
+                            <div class="">
+                                <select class="selectpicker" data-live-search="true" data-size=5 asp-for="CountryId" asp-items="@ViewBag.AllCountries"></select>
+                                <span class="text-danger" asp-validation-for="CountryId"></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label asp-for="StateId"></label>
+                            <div class="">
+                                <select class="selectpicker" data-live-search="true" data-size=5 asp-for="StateId" asp-items="@ViewBag.AllStates">
+                                    <option value="0"> Empty</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="StateId"></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label asp-for="CityId"></label>
+                            <div class="">
+                                <select class="selectpicker" data-live-search="true" data-size=5 asp-for="CityId" asp-items="@ViewBag.AllCities">
+                                    <option value="0"> Empty</option>
+                                    <span class="text-danger" asp-validation-for="CityId"></span>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <label asp-for="Adress"></label>
+                            <div class="">
+                                <input class="form-control" asp-for="Adress">
+                                <span class="text-danger" asp-validation-for="Adress"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PriceVisa"></label>
+                            <div class="">
+                                <input class="form-control" asp-for="PriceVisa">
+                                <span class="text-danger" asp-validation-for="PriceVisa"></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PriceHealthInsurance"></label>
+                            <div class="">
+                                <input class="form-control" asp-for="PriceHealthInsurance">
+                                <span class="text-danger" asp-validation-for="PriceHealthInsurance"></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PriceAirportPickup"></label>
+                            <div class="">
+                                <input class="form-control" asp-for="PriceAirportPickup">
+                                <span class="text-danger" asp-validation-for="PriceAirportPickup"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 form-group">
+                                <label for="files">Images</label>
+                                <div class="" style="display: inline;">
+                                    <input type="file" name="files" multiple class="d-inline">
+                                </div>
+                        </div>
+                        
+                    </div>
+                    @if(User.IsInRole("Owner") || User.IsInRole("Manager"))
+                    {
+                        <div class="row">
+                            <div class="col-sm-12 text-right">
+                                <button type="submit" class="btn btn-primary col-md-3">Save</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </form>
+        </div> <hr>
+        <div class="col-sm-7">
+            <div class="tabbable tabbable-tabdrop">
+                <ul class="nav nav-tabs"><li class="dropdown pull-right tabdrop hide"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-ellipsis-v"></i>&nbsp;<i class="fa fa-angle-down"></i> <b class="caret"></b></a><ul class="dropdown-menu"></ul></li>
+                    <li class="active">
+                        <a href="#tab1" data-toggle="tab" aria-expanded="false">Courses</a>
+                    </li>
+                    <li class="">
+                        <a href="#tab2" data-toggle="tab" aria-expanded="false">Images</a>
+                    </li>
+                    <li class="">
+                        <a href="#tab3" data-toggle="tab" aria-expanded="true">Accommodations</a>
+                    </li> 
+                    
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
+                        <div class="col-sm-12">
+                            @if(User.IsInRole("Owner") || User.IsInRole("Manager"))
+                            {
+                                <a href="/admin/CourseCreate/@Model.BranchId" class="btn btn-warning mb-4">New Course</a> <hr>
+                            }
+                            @await Html.PartialAsync("_courseTable", @courses)
+                        </div>  
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                        <div class="col-sm-12">
+                            @await Html.PartialAsync("_bImageList", @BImages)
+                        </div> 
+                    </div>
+                    <div class="tab-pane" id="tab3">
+                        <div class="col-sm-12">
+                            @if(User.IsInRole("Owner") || User.IsInRole("Manager"))
+                            {
+                                <a href="/admin/AccommodationCreate/@Model.BranchId" class="btn btn-warning mb-4">New Accommodation</a> <hr>
+                            }
+                            @await Html.PartialAsync("_accommodationTable", @Accommodations)
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            @* <span class="h3">Branch's Courses  <a href="/admin/CourseCreate/@Model.BranchId" class="btn btn-warning ml-4">New Course</a></span> <hr> *@
+            
+        </div>
+    </div>
+</div>
+
+

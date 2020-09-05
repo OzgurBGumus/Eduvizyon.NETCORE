@@ -1,0 +1,31 @@
+@model List<City>
+<table id="CityTable" class="table table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <td style="width:60px;">Id</td>
+            <td>Name</td>
+            <td style="width:110px;">Active</td>
+            <td style="width:260px;"></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var city in @Model)
+        {
+            <tr class="@(@city.Active?"":"bg-danger")">
+                <td>@city.CityId</td>
+                <td>@city.Name</td>
+                <td>@city.Active</td>
+                <td>
+                    @if(User.IsInRole("Owner") || User.IsInRole("Manager"))
+                    {
+                        <form asp-controller="Admin" asp-action="CityDelete" method="POST" style="display: inline;">
+                            <input type="hidden" name="cityId", value="@city.CityId">
+                            <button class="btn btn-xs btn-danger">Delete</button>
+                        </form>
+                    } 
+                    <a href="/admin/CityEdit/@city.CityId" class="btn btn-xs btn-primary">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

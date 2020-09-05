@@ -1,0 +1,32 @@
+@model List<Country>
+<table id="CountryTable" class="table table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <td style="width:60px;">Id</td>
+            <td>Name</td>
+            <td style="width:110px;">Active</td>
+            <td style="width:260px;"></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var country in @Model)
+        {
+            <tr>
+                <td>@country.CountryId</td>
+                <td>@country.Name</td>
+                <td>@country.Active</td>
+                <td>
+                    @if(User.IsInRole("Owner") || User.IsInRole("Manager"))
+                    {
+                        <form asp-controller="Admin" asp-action="CountryDelete" method="POST" style="display: inline;">
+                            <input type="hidden" name="countryId", value="@country.CountryId">
+                            <button class="btn btn-xs btn-danger">Delete</button>
+                        </form>
+                    }
+                    
+                    <a href="/admin/CountryEdit/@country.CountryId" class="btn btn-xs btn-primary">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
